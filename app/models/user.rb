@@ -5,8 +5,11 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
 
-  # associationの定義(1:NのN側を記述)
+  # associationの定義(1:NのN側を記述) post_imageテーブルへ
   has_many :post_images, dependent: :destroy
+
+  # # associationの定義(1:NのN側を記述) Post_commentテーブルへ
+  has_many :post_comments, dependent: :destroy
   has_one_attached :profile_image
 
   def get_profile_image(width, height)

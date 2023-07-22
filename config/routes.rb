@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   devise_for :users
 
     # post_image_controller用のルーティング
-   resources :post_images, only: [:new, :index, :show, :create,:destroy]
+   resources :post_images, only: [:new, :index, :show, :create,:destroy] do
+     resources :post_comments, only: [:create,:destroy]
+   end
 
     # users_controller用のルーティング
     resources :users, only: [:show, :edit, :update]
