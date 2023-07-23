@@ -7,7 +7,8 @@ Rails.application.routes.draw do
 
     # post_image_controller用のルーティング
    resources :post_images, only: [:new, :index, :show, :create,:destroy] do
-     resources :post_comments, only: [:create,:destroy]
+    resource :favorites, only: [:create,:destroy]
+    resources :post_comments, only: [:create,:destroy]
    end
 
     # users_controller用のルーティング

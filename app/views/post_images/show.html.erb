@@ -8,14 +8,30 @@
   <% if @post_image.user == current_user %>
    <%= link_to "削除", post_image_path(@post_image), method: :delete %>
   <% end %>
+   <!--いいね機能の実装-->
+   <% if @post_image.favorited_by?(current_user) %>
+     <!--もし今のユーザーがお気に入り済み=Model側のメソッドの判定がtrueなら以下-->
+      <p>
+      <%= link_to post_image_favorites_path(@post_image), method: :delete do %>♥<%= @post_image.favorites.count %> いいね
+   <% end %>
+      </p>
+   <% else %>
+    <!--ログインしているユーザーがまだいいねをしていない=Model側のメソッドの判定がfalseなら-->
+      <p>
+      <%= link_to post_image_favorites_path(@post_image), method: :post do %>♡<%= @post_image.favorites.count %> いいね
+   <% end %>
+      </p>
+  <% end %>
 </div>
 
 <div>
+  <!--コメント機能の実装-->
   <p>コメント件数:<%= @post_image.post_comments.count %></p>
   <% @post_image.post_comments.each do |post_comment| %>
     <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
     <%= post_comment.user.name %>
     <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
+    <!--コメントの削除リンクの実装-->
     <% if post_comment.user == current_user %>
       <%= link_to "削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete %>
     <% end %>
